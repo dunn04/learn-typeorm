@@ -15,9 +15,7 @@ source
   .catch(console.log)
   .then(async () => {
     const todoRepo = source.getRepository(TodoViewEntity);
-
     const todos = await todoRepo.find();
-
     console.log(todos);
   })
   .finally(() => {

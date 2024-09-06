@@ -1,4 +1,6 @@
-import { ViewColumn, ViewEntity } from "typeorm";
+import { JoinColumn, ManyToOne, ViewColumn, ViewEntity } from "typeorm";
+import { UserEntity } from "./user.entity";
+import { TodoEntity } from "./todo.entity";
 
 @ViewEntity({
   name: "todos",
@@ -10,8 +12,8 @@ import { ViewColumn, ViewEntity } from "typeorm";
       .addSelect("todo.description", "description")
       .addSelect("todo.status", "status")
       .addSelect("users.username", "author")
-      .from("todos", "todo")
-      .leftJoin("users", "users", "users.id = todo.user_id"),
+      .from(TodoEntity, "todo")
+      .leftJoin(UserEntity, "users", "users.id = todo.user_id"),
 })
 export class TodoViewEntity {
   @ViewColumn()
@@ -20,8 +22,6 @@ export class TodoViewEntity {
   title!: string;
   @ViewColumn()
   description!: string;
-  @ViewColumn()
-  status!: string;
   @ViewColumn()
   author!: string;
 }
